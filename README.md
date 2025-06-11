@@ -40,11 +40,12 @@ This will Create S3 bucket(s), Set up IAM roles and Configure MWAA environment
 #### 6. Deploy Airflow DAGs to MWAA
 Use the S3 bucket Airflow looks at (you'll get this from Terraform outputs):
 ```
-aws s3 cp ../dags/ s3://your-mwaa-dags-bucket/dags/ --recursive
+aws s3 cp ../dags/ s3://marketstream-dag-bucket/dags/ --recursive
 ```
 You can now view and trigger DAGs from the Airflow UI hosted on MWAA.
 #### 7. TODO
 - Redshift loading logic
-- Grafana/QuickSight dashboards
+- CloudWatch dashboards
+- CI/CD via GitHub Actions for DAG deployment
 - Slack/Email notifications
 - Real-time updates via Kafka or WebSockets
