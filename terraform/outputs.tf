@@ -1,3 +1,7 @@
-output "bucket_name" {
-  value = aws_s3_bucket.main.bucket
+output "dag_bucket" {
+  value = aws_s3_bucket.dag_bucket.bucket
+}
+
+output "log_bucket" {
+  value = aws_s3_bucket.log_bucket.bucket
 }
