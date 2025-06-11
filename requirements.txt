@@ -1,0 +1,6 @@
+boto3
+yfinance
+pandas
+requests
+textblob
+apache-airflow==2.9.0
