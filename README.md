@@ -1,8 +1,8 @@
 # MarketStream ETL Pipeline
 
 This project provides two ETL pipelines:
-- 📈 Stock price data via yfinance
-- 📰 Financial news via NewsAPI
+- Stock price data via yfinance
+- Financial news via NewsAPI
 
 Deployed with:
 - Python + Airflow
