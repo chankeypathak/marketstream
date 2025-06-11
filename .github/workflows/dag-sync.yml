@@ -1,0 +1,31 @@
+name: DAG Sync to S3
+
+on:
+  push:
+    paths:
+      - "dags/**"
+  workflow_dispatch:
+
+jobs:
+  upload:
+    name: Upload DAGs to S3
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      DAG_BUCKET: ${{ secrets.DAG_BUCKET }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y awscli
+
+      - name: Sync DAGs
+        run: |
+          aws s3 sync dags/ s3://$DAG_BUCKET/dags/ --delete
+
