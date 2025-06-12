@@ -1,4 +1,9 @@
+
 # MarketStream ETL Pipeline
+
+![Build](https://github.com/chankeypathak/marketstream/actions/workflows/ci.yml/badge.svg)
+![Terraform Deploy](https://github.com/chankeypathak/marketstream/actions/workflows/terraform.yml/badge.svg)
+![Python](https://img.shields.io/badge/python-3.10-blue.svg)
 
 This project provides two ETL pipelines:
 - Stock price data via yfinance
@@ -8,27 +13,34 @@ Deployed with:
 - Python + Airflow
 - Terraform on AWS (S3, MWAA, IAM, Redshift optional)
 
+## Architecture
+![Architecture](architecture.png "Architecture")
+
 ## Dev Notes
 #### 1. Create and Activate a Virtual Environment
 ```
 python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
+
 #### 2. Install Requirements
 ```
 pip install -r requirements.txt
 python -m textblob.download_corpora  # For sentiment analysis
 ```
+
 #### 3. Set Environment Variables (you can use .env)
 ```
 export NEWS_API_KEY=your_newsapi_key
 export S3_BUCKET=your_s3_bucket_name
 ```
+
 #### 4. Test the ETL Locally
 ```
 python main.py
 ```
 Files will be uploaded to S3 (based on your bucket and timestamped names).  
+
 #### 5. Deploy Infrastructure Using Terraform
 ```
 cd terraform
@@ -37,15 +49,22 @@ terraform plan -var-file="example.tfvars"
 terraform apply -var-file="example.tfvars"
 ```
 This will Create S3 bucket(s), Set up IAM roles and Configure MWAA environment
+
 #### 6. Deploy Airflow DAGs to MWAA
 Use the S3 bucket Airflow looks at (you'll get this from Terraform outputs):
 ```
 aws s3 cp ../dags/ s3://marketstream-dag-bucket/dags/ --recursive
 ```
 You can now view and trigger DAGs from the Airflow UI hosted on MWAA.
+
 #### 7. TODO
 - Redshift loading logic
 - CloudWatch dashboards
 - CI/CD via GitHub Actions for DAG deployment
 - Slack/Email notifications
 - Real-time updates via Kafka or WebSockets
+
+## Tests
+```
+PYTHONPATH=. pytest tests/
+```
